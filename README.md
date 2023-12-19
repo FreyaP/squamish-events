@@ -96,6 +96,7 @@ Home Page
 <!-- Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches. -->
 
 **HomePage**
+![](/squamish-events/src/assets/HomePage.png)
 
 **AddEvent**
 
@@ -415,4 +416,7 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 - FE: Light/dark theme
 - See past atteneded events/saved events in user profile when logged in
 - Forget password functionality
--
+- Social media intergration
+- Set notifications for new events added in specific categories
+- user comments on events
+- analytics on event engagement
