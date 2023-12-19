@@ -95,25 +95,18 @@ Home Page
 
 <!-- Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches. -->
 
-**HomePage**
 ![](./src/assets/HomePage.png)
 
-**Add or Edit Event**
 ![](./src/assets/Addedit%20page.png)
 
-**EventDetails**
 ![](./src/assets/Event-details.png)
 
-**Register**
 ![](./src/assets/register.png)
 
-**Login**
 ![](./src/assets/Login.png)
 
-**Dashboard**
 ![](./src/assets/host%20dashboard.png)
 
-**Delete Modal?**
 ![](./src/assets/delete.png)
 
 ### Data
