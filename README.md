@@ -42,6 +42,7 @@ As a logged in user (nice to have):
 General Site Features:
 
 - weather bar showing the current and forecast weather (external api)
+  - Will appear below the nav bar (not in the mock up images)
 - responsive design
 
 ## Implementation
@@ -77,17 +78,29 @@ Open weather map api for the current and forecast weather data
 Home Page
 
 - displays events to browse
-  Add Event
+
+Add Event
+
 - add event form (logged in host)
-  Edit Event
+
+Edit Event
+
 - edit eveit form (logged in host)
-  Event details
+
+Event details
+
 - details of single event with link to tickets if applicable
-  Register
+
+Register
+
 - sign up form
-  Login
+
+Login
+
 - login form
-  Dashboard (logged in host)
+
+Dashboard (logged in host)
+
 - profile details
 - list of events by the logged in host
 
