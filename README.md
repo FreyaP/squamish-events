@@ -96,7 +96,7 @@ Home Page
 <!-- Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches. -->
 
 **HomePage**
-![](/squamish-events/src/assets/HomePage.png)
+![](./src/assets/HomePage.png)
 
 **AddEvent**
 
