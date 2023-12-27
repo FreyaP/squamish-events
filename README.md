@@ -41,8 +41,6 @@ As a logged in user (nice to have):
 
 General Site Features:
 
-- weather bar showing the current and forecast weather (external api)
-  - Will appear below the nav bar (not in the mock up images)
 - responsive design
 
 ## Implementation
@@ -58,6 +56,7 @@ Frontend:
   - react
   - react-router
   - axios - HTTP requests
+  - multer for images
 
 Backend:
 
@@ -68,8 +67,6 @@ Backend:
 - MySql
 
 ### APIs
-
-Open weather map api for the current and forecast weather data
 
 ### Sitemap
 
@@ -85,7 +82,7 @@ Add Event
 
 Edit Event
 
-- edit eveit form (logged in host)
+- edit event form (logged in host)
 
 Event details
 
@@ -99,10 +96,10 @@ Login
 
 - login form
 
-Dashboard (logged in host)
+Dashboard (logged in host) - do I need another UI for a user vs host
 
 - profile details
-- list of events by the logged in host
+- list of events by the logged in host or list of events saved?"interested in" by user
 
 ### Mockups
 
@@ -146,18 +143,16 @@ Events Table
 - Category
 - Ticket_link
 - Image
-- Likes
+- Likes - this is moved into a seperate table
 - Host_id (FK - Host ID)
 
-<!-- ### Nice to have
+Likes Table - events can be liked by many users & a user can like many events
 
-User Table (if using user auth)
-
-- ID
-- Name
-- Email
-- Password
-- Saved events (FK - Event ID) -->
+- id
+- user_id
+- event_id
+- liked (true/false)
+  e.g. get all events that have likes with user_id = ??? (this is the join command )
 
 ### Endpoints
 
@@ -169,12 +164,16 @@ List endpoints that your server will implement, including HTTP methods, paramete
 
 Response:
 
-"id": 1,
-"name": "Fred",
-"email": "email",
-"password": "password",
-"role": "host",
-"events": []
+Response body:
+"id"
+"event_name":
+"description"
+"date"
+"category"
+"ticket_link"
+"image"
+"likes"
+"host_id" (FK - Host ID)
 
 **POST/events**
 
@@ -265,8 +264,9 @@ Request:
 Response:
 No content
 
-**PUT/events/:id/likes**
-Add like to event
+**POST/likes **DELETE/likes\*\*
+user_id
+event_id
 
 **GET/events/:host_id**
 Get events by host (by a logged in host)
