@@ -1,1 +1,20 @@
 @use "../../styles/partials/globals" as *;
+
+.homepage {
+  background-color: $background-light;
+}
+.events {
+  margin: 0 2rem;
+  background-color: $light-primary;
+  padding: 1rem 0;
+  &__filters {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid $background-dark;
+  }
+  &__filters {
+    padding: 1rem;
+  }
+  &__search-button {
+    margin-top: 1rem;
+  }
+}

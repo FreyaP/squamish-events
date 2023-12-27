@@ -66,6 +66,15 @@ button,
   width: 100%;
   border-radius: 20px;
   background-color: $accent-primary;
+  border: none;
+  color: $light-primary;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $button-hover;
+  }
   @include tablet {
     width: fit-content;
   }
@@ -76,6 +85,7 @@ input {
   margin-top: 4px;
   border-radius: 20px;
   width: 100%;
+  border: 1px solid $background-dark;
 }
 .logo {
   width: 4rem;
