@@ -1,1 +1,39 @@
-@use "../../styles/partials/global" as *;
+@use "../../styles/partials/globals" as *;
+
+.header {
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 1rem 2rem;
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 3rem 0 3rem;
+    }
+  }
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    @include tablet {
+      gap: 5rem;
+    }
+
+    &--account {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+  &__link {
+    border-bottom: 1px solid #fff;
+    &:hover {
+      border-bottom: 1px solid $accent-primary;
+    }
+  }
+}
