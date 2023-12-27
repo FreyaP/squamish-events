@@ -1,15 +1,18 @@
 @use "../../styles/partials/globals" as *;
 
 .hero {
-  background-image: url("../../assets/images/hero3.jpg");
-  background-size: cover;
-  height: 40vh;
+  background-color: $background-light;
   display: flex;
-  justify-content: center;
+
   width: 100%;
+  padding-top: 2rem;
+  align-items: center;
+  &__image {
+    width: 20rem;
+  }
 
   &__titles {
-    background-color: rgb(50, 50, 50, 0.1);
+    //background-color: rgb(50, 50, 50, 0.1);
     width: 100%;
     height: 100%;
     text-align: center;
@@ -18,11 +21,11 @@
     justify-content: center;
   }
   &__title {
-    color: $light-primary;
+    color: $dark-primary;
     text-transform: uppercase;
     padding-bottom: 0.4rem;
   }
   &__subtitle {
-    color: $light-primary;
+    color: $dark-primary;
   }
 }
