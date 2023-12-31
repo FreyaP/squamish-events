@@ -1,11 +1,15 @@
 import axios from "axios";
 import "./AddEvent.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import Hero from "../../components/Hero/Hero";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+import addEvent from "../../assets/images/svgs/add_event.svg";
 
 export default function AddEvent() {
+  const navigate = useNavigate();
   const [file, setFile] = useState();
-  //const [imageName, setImageName] = useState();
+
   const [formValues, setFormValues] = useState({
     event_name: "",
     venue: "",
@@ -44,15 +48,14 @@ export default function AddEvent() {
       headers: { "Content-Type": "multipart/form-data" },
     });
     console.log(response);
-    //setImageName(response.data.imageName);
+    alert("Event added!!");
+    navigate("/");
   };
-  console.log(file);
-  console.log(formValues);
+
   return (
     <div className="add-event">
-      <h1 className="add-event__title">
-        post an event and share with the world
-      </h1>
+      <Hero image={addEvent} title="post an event and share with the world" />
+      <h1 className="add-event__title"></h1>
       <form className="add-event__form" encType="multipart/form-data">
         <div className="add-event__name">
           <label htmlFor="event_name">Your Event Name</label>
@@ -105,12 +108,13 @@ export default function AddEvent() {
           />
         </div>
         <div className="add-event__ticket">
-          <label htmlFor="name">Ticket URL</label>
+          <label htmlFor="name">Price | Free</label>
           <input
             type="text"
             id="ticket_link"
             name="ticket_link"
             className="add-event__input"
+            placeholder="Is it FREE?"
             onChange={handleChange}
           />
         </div>
