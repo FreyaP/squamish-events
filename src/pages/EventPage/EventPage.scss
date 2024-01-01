@@ -31,7 +31,8 @@
     padding-bottom: 0.5rem;
   }
 
-  &__location {
+  &__location,
+  &__tickets {
     text-transform: capitalize;
   }
   &__description,
@@ -44,6 +45,7 @@
   }
   &__icon {
     &--action {
+      margin-left: 1rem;
       &:hover {
         cursor: pointer;
       }

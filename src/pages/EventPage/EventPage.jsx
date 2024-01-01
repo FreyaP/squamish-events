@@ -8,6 +8,8 @@ import location from "../../assets/images/icons/location.svg";
 import price from "../../assets/images/icons/price.svg";
 import details from "../../assets/images/icons/details.svg";
 import save from "../../assets/images/icons/star.svg";
+import edit from "../../assets/images/icons/edit.svg";
+import { Link } from "react-router-dom";
 
 export default function EventPage() {
   const { id } = useParams();
@@ -18,7 +20,7 @@ export default function EventPage() {
     const getSelectedEvent = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/events/${id}`);
-        console.log(response.data);
+
         setEvent(response.data);
       } catch (error) {
         console.log(error);
@@ -44,12 +46,22 @@ export default function EventPage() {
             <p className="event-page__date">
               {event ? FormatDate(event.date) : null}
             </p>
-            <img
-              src={save}
-              alt="save icon"
-              className="event-page__icon--action"
-            />
-            <p className="event-page__icon--tooltip">Save event</p>
+            <div className="event-page__icons">
+              <img
+                src={save}
+                alt="save icon"
+                className="event-page__icon--action"
+              />
+              <p className="event-page__icon--tooltip">Save event</p>
+              <Link to={`/editevent/${id}`}>
+                <img
+                  src={edit}
+                  alt="save icon"
+                  className="event-page__icon--action"
+                />
+                <p className="event-page__icon--tooltip">Edit event</p>
+              </Link>
+            </div>
           </div>
           <h1 className="event-page__title">{event.event_name}</h1>
           <h2 className="event-page__label">Hosted By</h2>
