@@ -3,6 +3,7 @@ import axios from "axios";
 import "./EventForm.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function EventForm({ id }) {
@@ -166,6 +167,17 @@ export default function EventForm({ id }) {
             onChange={handleChange}
           />
         </div>
+
+        <button
+          className="event__button-cancel"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+        >
+          Cancel
+        </button>
+
         <button onClick={updateEvent}>Submit</button>
       </form>
     </div>

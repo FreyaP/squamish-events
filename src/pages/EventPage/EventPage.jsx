@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "./EventPage.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,12 +9,16 @@ import price from "../../assets/images/icons/price.svg";
 import details from "../../assets/images/icons/details.svg";
 import save from "../../assets/images/icons/star.svg";
 import edit from "../../assets/images/icons/edit.svg";
+import deleteIcon from "../../assets/images/icons/delete.svg";
 import { Link } from "react-router-dom";
+import DeleteModal from "../../components/DeleteModal/DeleteModal";
 
 export default function EventPage() {
   const { id } = useParams();
   const [event, setEvent] = useState({});
+  const navigate = useNavigate();
   //document.title = `Squamish Events | ${}`;
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const getSelectedEvent = async () => {
@@ -28,6 +32,17 @@ export default function EventPage() {
     };
     getSelectedEvent();
   }, [id]);
+
+  const deleteEvent = async () => {
+    try {
+      setShowDeleteModal(false);
+      await axios.delete(`${BASE_URL}/events/${id}`);
+      alert(`${event.event_name} has been deleted`);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (!event) {
     return <h1>Loading</h1>;
@@ -61,6 +76,20 @@ export default function EventPage() {
                 />
                 <p className="event-page__icon--tooltip">Edit event</p>
               </Link>
+
+              <img
+                src={deleteIcon}
+                alt="delete icon"
+                className="event-page__icon--action"
+                onClick={() => setShowDeleteModal(true)}
+              />
+              <p className="event-page__icon--tooltip">Delete event</p>
+              <DeleteModal
+                showModal={showDeleteModal}
+                setShowModal={setShowDeleteModal}
+                event={event.event_name}
+                deleteEvent={deleteEvent}
+              />
             </div>
           </div>
           <h1 className="event-page__title">{event.event_name}</h1>
