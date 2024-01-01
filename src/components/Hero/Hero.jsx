@@ -1,13 +1,13 @@
+/* eslint-disable react/prop-types */
 import "./Hero.scss";
-import hero from "../../assets/images/svgs/hero.svg";
 
-export default function Hero() {
+export default function Hero({ image, title, subtitle }) {
   return (
     <div className="hero">
-      <img src={hero} className="hero__image" />
+      <img src={image} className="hero__image" />
       <div className="hero__titles">
-        <h1 className="hero__title">Why the sadness, Squamish?</h1>
-        <h2 className="hero__subtitle">Let's find some fun!</h2>
+        <h1 className="hero__title">{title}</h1>
+        <h2 className="hero__subtitle">{subtitle}</h2>
       </div>
     </div>
   );
