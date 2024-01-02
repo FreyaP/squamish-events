@@ -5,6 +5,7 @@ import AddEvent from "./pages/AddEvent/AddEvent";
 import EventPage from "./pages/EventPage/EventPage";
 import EditEvent from "./pages/EditEvent/EditEvent";
 import DeleteModal from "./components/DeleteModal/DeleteModal";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/events/:id" element={<EventPage />} />
           <Route path="/editevent/:id" element={<EditEvent />} />
           <Route path="/delete" element={<DeleteModal />} />
+          <Route path="/myaccount/:id" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -76,7 +76,7 @@ export default function EventForm({ id }) {
       });
       console.log(response);
       alert("Event added!!");
-      navigate("/");
+      navigate(-1);
     }
     if (originalImage === file) {
       const response = await axios.put(`${BASE_URL}/events/${id}`, formValues);
@@ -100,10 +100,10 @@ export default function EventForm({ id }) {
       });
       console.log(response);
       alert("Event updated!!");
-      navigate("/");
+      navigate(-1);
     }
   };
-  console.log(formValues);
+
   return (
     <div className="add-event">
       <form className="add-event__form" encType="multipart/form-data">
@@ -142,14 +142,7 @@ export default function EventForm({ id }) {
         </div>
         <div className="add-event__category">
           <label htmlFor="category">Event Type</label>
-          {/* <input
-            type="text"
-            id="category"
-            name="category"
-            className="add-event__input"
-            value={formValues.category}
-            onChange={handleChange}
-          /> */}
+
           <select
             name="category"
             id="category"
@@ -177,6 +170,7 @@ export default function EventForm({ id }) {
             className="add-event__input "
             id="date"
             name="date"
+            min={new Date().toISOString().split("T")[0]}
             value={formValues.date}
             onChange={handleChange}
           />

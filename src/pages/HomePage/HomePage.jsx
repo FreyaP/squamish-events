@@ -11,6 +11,8 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export default function HomePage() {
   const [events, setEvents] = useState();
   const [filteredEvents, setFilteredEvents] = useState();
+  const [category, setCategory] = useState("All");
+
   useEffect(() => {
     const getEvents = async () => {
       try {
@@ -34,7 +36,7 @@ export default function HomePage() {
 
   const handleFilter = (e) => {
     e.preventDefault();
-
+    setCategory(e.target.value);
     if (e.target.value === "All") {
       setFilteredEvents(events);
       return;
@@ -125,36 +127,42 @@ export default function HomePage() {
               </button>
             </div>
           </section>
+          <div className="divider"></div>
           {filteredEvents.length === 0 ? (
-            <h2 className="events--none">Bad times! No events in Squamish!</h2>
+            <h2 className="events--title">
+              Bad times! No {category} events in Squamish!
+            </h2>
           ) : (
-            <section className="events__list">
-              {filteredEvents.map((event) => {
-                return (
-                  <Link
-                    to={`/events/${event.id}`}
-                    className="event"
-                    key={event.id}
-                  >
-                    <img
-                      src={`${BASE_URL}/images/${event.image}`}
-                      alt=""
-                      className={
-                        !event.image
-                          ? "event__image--placeholder"
-                          : "event__image"
-                      }
-                    />
-                    <div className="event__details">
-                      <h2 className="event__title">{event.event_name}</h2>
-                      <h3 className="event__host">{event.user_id}</h3>
+            <>
+              <h2 className="events--title">{category} events in Squamish</h2>
+              <section className="events__list">
+                {filteredEvents.map((event) => {
+                  return (
+                    <Link
+                      to={`/events/${event.id}`}
+                      className="event"
+                      key={event.id}
+                    >
+                      <img
+                        src={`${BASE_URL}/images/${event.image}`}
+                        alt=""
+                        className={
+                          !event.image
+                            ? "event__image--placeholder"
+                            : "event__image"
+                        }
+                      />
+                      <div className="event__details">
+                        <h2 className="event__title">{event.event_name}</h2>
+                        <h3 className="event__host">{event.user_id}</h3>
 
-                      <p className="event__date">{FormatDate(event.date)}</p>
-                    </div>
-                  </Link>
-                );
-              })}
-            </section>
+                        <p className="event__date">{FormatDate(event.date)}</p>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </section>
+            </>
           )}
         </div>
       </div>

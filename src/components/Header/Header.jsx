@@ -10,7 +10,9 @@ export default function Header() {
           <img src={logo} alt="Logo" className="logo" />
         </Link>
         <div className="header__links">
-          <Link className="header__link">My Events</Link>
+          <Link to="./myaccount/1" className="header__link">
+            My Events
+          </Link>
           <div className="header__links--account">
             <Link className="header__link">Login</Link>
             <Link className="header__link">Sign Up</Link>

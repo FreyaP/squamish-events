@@ -9,12 +9,14 @@
   background-color: $light-primary;
   padding: 1rem 0;
   border-radius: 8px;
-  &--none {
+  &--title {
     text-align: center;
+    padding: 2rem 0;
   }
   &__filters {
     padding-bottom: 2rem;
     padding: 1rem;
+    border-radius: 20px;
   }
   &__filter {
     display: flex;
