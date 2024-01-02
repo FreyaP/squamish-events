@@ -3,7 +3,7 @@ import axios from "axios";
 import "./EventForm.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function EventForm({ id }) {
@@ -23,6 +23,9 @@ export default function EventForm({ id }) {
   //Get existing event details
   useEffect(() => {
     const getEventDetails = async () => {
+      if (id === undefined) {
+        return;
+      }
       try {
         const response = await axios.get(`${BASE_URL}/events/${id}`);
 
@@ -58,6 +61,23 @@ export default function EventForm({ id }) {
   const updateEvent = async (e) => {
     e.preventDefault();
     console.log(`submitted`);
+    if (id === undefined) {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      for (const key in formValues) {
+        if (Object.prototype.hasOwnProperty.call(formValues, key)) {
+          formData.append(key, formValues[key]);
+        }
+      }
+
+      const response = await axios.post(`${BASE_URL}/events`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(response);
+      alert("Event added!!");
+      navigate("/");
+    }
     if (originalImage === file) {
       const response = await axios.put(`${BASE_URL}/events/${id}`, formValues);
       console.log(response);
@@ -83,13 +103,9 @@ export default function EventForm({ id }) {
       navigate("/");
     }
   };
-  //   console.log(formValues);
-  //   console.log("FVIMage", formValues.image);
-  //   console.log("file", file);
-  //   console.log("original", originalImage);
+  console.log(formValues);
   return (
     <div className="add-event">
-      <h1 className="add-event__title"></h1>
       <form className="add-event__form" encType="multipart/form-data">
         <div className="add-event__name">
           <label htmlFor="event_name">Your Event Name</label>
@@ -126,20 +142,39 @@ export default function EventForm({ id }) {
         </div>
         <div className="add-event__category">
           <label htmlFor="category">Event Type</label>
-          <input
+          {/* <input
             type="text"
             id="category"
             name="category"
             className="add-event__input"
             value={formValues.category}
             onChange={handleChange}
-          />
+          /> */}
+          <select
+            name="category"
+            id="category"
+            className=" add-event__input--category"
+            value={formValues.category}
+            onChange={handleChange}
+          >
+            <option value="Please select" selected>
+              Please select
+            </option>
+            <option value="Adventure">Adventure</option>
+            <option value="Arts">Arts</option>
+            <option value="Business">Business</option>
+            <option value="Community">Community</option>
+            <option value="Food & Drink">Food & Drink</option>
+            <option value="Health">Health</option>
+            <option value="Music">Music</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+          </select>
         </div>
         <div className="add-event__date">
           <label htmlFor="date">Event Date</label>
           <input
             type="date"
-            className="add-event__input"
+            className="add-event__input "
             id="date"
             name="date"
             value={formValues.date}
@@ -167,18 +202,19 @@ export default function EventForm({ id }) {
             onChange={handleChange}
           />
         </div>
+        <div className="add-event__buttons-box">
+          <button
+            className="event__button-cancel"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            Cancel
+          </button>
 
-        <button
-          className="event__button-cancel"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-        >
-          Cancel
-        </button>
-
-        <button onClick={updateEvent}>Submit</button>
+          <button onClick={updateEvent}>Submit</button>
+        </div>
       </form>
     </div>
   );

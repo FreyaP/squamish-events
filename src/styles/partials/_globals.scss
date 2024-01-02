@@ -90,3 +90,16 @@ input {
 .logo {
   width: 4rem;
 }
+select {
+  border-radius: 20px;
+  height: 2.25rem;
+  margin-top: 4px;
+  padding-left: 1rem;
+  appearance: none;
+  background-image: url("../../assets/images/icons/chevron.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  &:hover {
+    cursor: pointer;
+  }
+}
