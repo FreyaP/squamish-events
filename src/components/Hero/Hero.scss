@@ -9,9 +9,12 @@
   align-items: center;
   @include tablet {
     flex-direction: row;
+    justify-content: space-around;
   }
   &__image {
     width: 20rem;
+    @include tablet {
+    }
   }
 
   &__titles {
@@ -21,6 +24,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @include tablet {
+      width: 50%;
+    }
   }
   &__title {
     color: $dark-primary;

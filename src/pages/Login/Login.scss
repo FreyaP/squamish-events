@@ -1,1 +1,23 @@
 @use "../../styles/partials/globals" as *;
+
+.login {
+  background-color: $background-light;
+
+  &__form {
+    background-color: $light-primary;
+    margin: 0 2rem;
+    padding: 2rem;
+  }
+  &__input {
+    margin-bottom: 1rem;
+  }
+  &__footer {
+    margin-top: 1rem;
+    text-align: center;
+    &--link {
+      &:hover {
+        border-bottom: 2px solid $accent-primary;
+      }
+    }
+  }
+}

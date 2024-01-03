@@ -1,7 +1,7 @@
 import "./Dashboard.scss";
 import Hero from "../../components/Hero/Hero";
 import account from "../../assets/images/svgs/account.svg";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FormatDate from "../../utils/FormatDate";
@@ -9,15 +9,18 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Dashboard() {
   const { user_id } = useParams();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [myEvents, setMyEvents] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const getUserEvents = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/events/user/${user_id}`);
-        console.log(response.data);
         setMyEvents(response.data);
+
+        const userResponse = await axios.get(`${BASE_URL}/users/${user_id}`);
+        setUser(userResponse.data);
       } catch (error) {
         console.log(error);
       }
@@ -43,8 +46,8 @@ export default function Dashboard() {
       <div className="dashboard">
         <Hero
           image={account}
-          title={"Your events"}
-          subtitle={"Create some fun, share some awesome times!"}
+          title={`Hi ${user?.user_name.split(" ")[0]}!`}
+          subtitle={"Let's create some fun and share some awesome times!"}
         />
         <div className="dashboard-container">
           <div className="dashboard__add-event">
@@ -54,31 +57,32 @@ export default function Dashboard() {
           </div>
           <div className="dashboard__my-events">
             <h2>My Events:</h2>
-            {myEvents?.map((event) => {
-              return (
-                <Link
-                  to={`/events/${event.id}`}
-                  className="event"
-                  key={event.id}
-                >
-                  <img
-                    src={`${BASE_URL}/images/${event.image}`}
-                    alt=""
-                    className={
-                      !event.image
-                        ? "event__image--placeholder"
-                        : "event__image"
-                    }
-                  />
-                  <div className="event__details">
-                    <h2 className="event__title">{event.event_name}</h2>
-                    <h3 className="event__host">{event.user_id}</h3>
+            <div className="dashboard__events-list">
+              {myEvents?.map((event) => {
+                return (
+                  <Link
+                    to={`/events/${event.id}`}
+                    className="event"
+                    key={event.id}
+                  >
+                    <img
+                      src={`${BASE_URL}/images/${event.image}`}
+                      alt=""
+                      className={
+                        !event.image
+                          ? "event__image--placeholder"
+                          : "event__image"
+                      }
+                    />
+                    <div className="event__details">
+                      <h2 className="event__title">{event.event_name}</h2>
 
-                    <p className="event__date">{FormatDate(event.date)}</p>
-                  </div>
-                </Link>
-              );
-            })}
+                      <p className="event__date">{FormatDate(event.date)}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
           <div className="dashboard__saved-events">
             <h2>Saved Events:</h2>

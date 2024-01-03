@@ -16,6 +16,7 @@ import DeleteModal from "../../components/DeleteModal/DeleteModal";
 export default function EventPage() {
   const { id } = useParams();
   const [event, setEvent] = useState({});
+  const [host, setHost] = useState();
   const navigate = useNavigate();
   //document.title = `Squamish Events | ${}`;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -32,6 +33,18 @@ export default function EventPage() {
     };
     getSelectedEvent();
   }, [id]);
+
+  useEffect(() => {
+    const getHostDetails = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/users/${event.user_id}`);
+        setHost(response.data.user_name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getHostDetails();
+  }, [event]);
 
   const deleteEvent = async () => {
     try {
@@ -94,7 +107,7 @@ export default function EventPage() {
           </div>
           <h1 className="event-page__title">{event.event_name}</h1>
           <h2 className="event-page__label">Hosted By</h2>
-          <p className="event-page__host">{event.user_id}</p>
+          <p className="event-page__host">{host}</p>
           <h2 className="event-page__label">Location</h2>
           <div className="event-page__group">
             <img src={location} alt="location icon" />

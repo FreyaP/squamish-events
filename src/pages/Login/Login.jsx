@@ -4,6 +4,7 @@ import "./Login.scss";
 import { useState } from "react";
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+import login from "../../assets/images/svgs/login.svg";
 
 export default function Login() {
   const [error, setError] = useState();
@@ -30,10 +31,9 @@ export default function Login() {
 
   return (
     <>
-      <Hero />
+      <Hero image={login} title={`Login`} />
 
       <section className="login">
-        <h1 className="login__title">Login</h1>
         <form className="login__form" onSubmit={handleSubmit}>
           <div className="login__field">
             <label htmlFor="email" className="login__label">
@@ -59,10 +59,13 @@ export default function Login() {
           </div>
           <button className="login__button">Login</button>
           {error && <div className="login__error">{error}</div>}
+          <p className="login__footer">
+            Need an account?{" "}
+            <Link className="login__footer--link" to="../signup">
+              Sign Up
+            </Link>
+          </p>
         </form>
-        <p>
-          Need an account? <Link to="../signup">Sign Up</Link>
-        </p>
       </section>
     </>
   );

@@ -9,10 +9,31 @@ import FormatDate from "../../utils/FormatDate";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function HomePage() {
-  const [events, setEvents] = useState();
+  const [allEvents, setAllEvents] = useState();
   const [filteredEvents, setFilteredEvents] = useState();
   const [category, setCategory] = useState("All");
 
+  // Gets host name based on the event user id and adds name to the event object in state
+  const getHost = async (sortedEvents) => {
+    try {
+      const eventsWithHost = await Promise.all(
+        sortedEvents.map(async (event) => {
+          const response = await axios.get(
+            `${BASE_URL}/users/${event.user_id}`
+          );
+          return { ...event, host_name: response.data.user_name };
+        })
+      );
+
+      setFilteredEvents(eventsWithHost);
+      setAllEvents(eventsWithHost);
+    } catch (error) {
+      console.log(error);
+      throw error; // Re-throw the error to indicate that the function failed
+    }
+  };
+
+  // get all events and sort by date. Call the getHost function
   useEffect(() => {
     const getEvents = async () => {
       try {
@@ -24,9 +45,7 @@ export default function HomePage() {
           const dateB = new Date(b.date);
           return dateA - dateB;
         });
-
-        setEvents(sortedEvents);
-        setFilteredEvents(sortedEvents);
+        getHost(sortedEvents);
       } catch (error) {
         console.log(error);
       }
@@ -34,23 +53,24 @@ export default function HomePage() {
     getEvents();
   }, []);
 
+  // Filter events based on the category
   const handleFilter = (e) => {
     e.preventDefault();
     setCategory(e.target.value);
     if (e.target.value === "All") {
-      setFilteredEvents(events);
+      setFilteredEvents(allEvents);
       return;
     }
-    const filteredEvents = events.filter(
+    const filteredEvents = allEvents.filter(
       (item) => item.category === e.target.value
     );
 
     setFilteredEvents(filteredEvents);
   };
 
-  if (!events || events.length === 0) {
+  if (!allEvents || allEvents.length === 0) {
     return <h1>Finding events in Squamish...</h1>;
-  } else if (events.length > 0) {
+  } else if (allEvents.length > 0) {
     return (
       <div className="homepage">
         <Hero
@@ -154,7 +174,8 @@ export default function HomePage() {
                       />
                       <div className="event__details">
                         <h2 className="event__title">{event.event_name}</h2>
-                        <h3 className="event__host">{event.user_id}</h3>
+
+                        <h3 className="event__host">{event.host_name}</h3>
 
                         <p className="event__date">{FormatDate(event.date)}</p>
                       </div>
