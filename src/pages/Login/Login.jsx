@@ -6,7 +6,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 import login from "../../assets/images/svgs/login.svg";
 
-export default function Login() {
+export default function Login({ setLoggedIn }) {
   const [error, setError] = useState();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function Login() {
       .then((response) => {
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("user_id", response.data.id);
-
+        setLoggedIn(true);
         navigate(`/myaccount/${response.data.id}`);
       })
       .catch((error) => {

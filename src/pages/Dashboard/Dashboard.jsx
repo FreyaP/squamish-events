@@ -35,7 +35,7 @@ export default function Dashboard() {
           image={account}
           title={`Uh oh! `}
           subtitle={`Please log in to view this page`}
-          link={"./login"}
+          link={"../../login"}
           link_name={`Login here!`}
         />
       </div>
