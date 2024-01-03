@@ -1,7 +1,5 @@
 import "./AddEvent.scss";
-
 import Hero from "../../components/Hero/Hero";
-
 import addEvent from "../../assets/images/svgs/add_event.svg";
 import EventForm from "../../components/EventForm/EventForm";
 

@@ -16,7 +16,7 @@ export default function EventForm({ id }) {
     category: "",
     date: "",
     ticket_link: "",
-    user_id: 1,
+    user_id: sessionStorage.getItem("user_id"),
   });
   const [originalImage, setOriginalImage] = useState();
 

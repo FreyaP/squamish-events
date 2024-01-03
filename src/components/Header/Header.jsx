@@ -10,12 +10,19 @@ export default function Header() {
           <img src={logo} alt="Logo" className="logo" />
         </Link>
         <div className="header__links">
-          <Link to="./myaccount/1" className="header__link">
+          <Link
+            to={`./myaccount/${sessionStorage.getItem("user_id")}`}
+            className="header__link"
+          >
             My Events
           </Link>
           <div className="header__links--account">
-            <Link className="header__link">Login</Link>
-            <Link className="header__link">Sign Up</Link>
+            <Link to="./login" className="header__link">
+              Login
+            </Link>
+            <Link to="./signup" className="header__link">
+              Sign Up
+            </Link>
           </div>
         </div>
       </nav>

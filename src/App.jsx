@@ -6,6 +6,8 @@ import EventPage from "./pages/EventPage/EventPage";
 import EditEvent from "./pages/EditEvent/EditEvent";
 import DeleteModal from "./components/DeleteModal/DeleteModal";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import SignUp from "./pages/Signup/Signup";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
           <Route path="/events/:id" element={<EventPage />} />
           <Route path="/editevent/:id" element={<EditEvent />} />
           <Route path="/delete" element={<DeleteModal />} />
-          <Route path="/myaccount/:id" element={<Dashboard />} />
+          <Route path="/myaccount/:user_id" element={<Dashboard />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </>
