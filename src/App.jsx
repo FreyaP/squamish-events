@@ -19,7 +19,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/addevent" element={<AddEvent />} />
-          <Route path="/events/:id" element={<EventPage />} />
+          <Route
+            path="/events/:id"
+            element={<EventPage loggedIn={loggedIn} />}
+          />
           <Route path="/editevent/:id" element={<EditEvent />} />
           <Route path="/delete" element={<DeleteModal />} />
           <Route path="/myaccount/:user_id" element={<Dashboard />} />

@@ -19,4 +19,9 @@
       }
     }
   }
+  &__error {
+    margin-top: 1rem;
+    padding-left: 0.5rem;
+    color: $button;
+  }
 }

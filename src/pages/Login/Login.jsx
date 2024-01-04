@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link, useNavigate } from "react-router-dom";
 import Hero from "../../components/Hero/Hero";
 import "./Login.scss";
@@ -25,6 +26,7 @@ export default function Login({ setLoggedIn }) {
         navigate(`/myaccount/${response.data.id}`);
       })
       .catch((error) => {
+        console.log(error.response.data);
         setError(error.response.data);
       });
   };

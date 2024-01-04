@@ -8,19 +8,57 @@ import FormatDate from "../../utils/FormatDate";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Dashboard() {
+  document.title = `Squamish Events | My Account`;
   const { user_id } = useParams();
   //const navigate = useNavigate();
   const [myEvents, setMyEvents] = useState();
   const [user, setUser] = useState();
+  const [savedEvents, setSavedEvents] = useState();
+
+  const getSavedEvents = async (savedEvents) => {
+    try {
+      const savedEventDetails = await Promise.all(
+        savedEvents.map(async (event) => {
+          //get each event based on id and return
+          const response = await axios.get(
+            `${BASE_URL}/events/${event.event_id}`
+          );
+          return response.data;
+        })
+      );
+
+      setSavedEvents(savedEventDetails);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const getUserEvents = async () => {
+      //Invdividual try catch statements in case user has no events we still want to move to the next call
+      try {
+        const userResponse = await axios.get(`${BASE_URL}/users/${user_id}`);
+        setUser(userResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
       try {
         const response = await axios.get(`${BASE_URL}/events/user/${user_id}`);
         setMyEvents(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const savedEvents = await axios.get(`${BASE_URL}/saved/${user_id}`);
+        setSavedEvents(savedEvents.data);
 
-        const userResponse = await axios.get(`${BASE_URL}/users/${user_id}`);
-        setUser(userResponse.data);
+        const sortedEvents = savedEvents.data.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateA - dateB;
+        });
+
+        getSavedEvents(sortedEvents);
       } catch (error) {
         console.log(error);
       }
@@ -86,6 +124,32 @@ export default function Dashboard() {
           </div>
           <div className="dashboard__saved-events">
             <h2>Saved Events:</h2>
+            <div className="dashboard__events-list">
+              {savedEvents?.map((event) => {
+                return (
+                  <Link
+                    to={`/events/${event.id}`}
+                    className="event"
+                    key={event.id}
+                  >
+                    <img
+                      src={`${BASE_URL}/images/${event.image}`}
+                      alt=""
+                      className={
+                        !event.image
+                          ? "event__image--placeholder"
+                          : "event__image"
+                      }
+                    />
+                    <div className="event__details">
+                      <h2 className="event__title">{event.event_name}</h2>
+
+                      <p className="event__date">{FormatDate(event.date)}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

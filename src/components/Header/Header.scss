@@ -32,6 +32,7 @@
   }
   &__link {
     border-bottom: 2px solid #fff;
+    line-height: 1.625rem;
     &:hover {
       border-bottom: 2px solid $accent-primary;
       cursor: pointer;

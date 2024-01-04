@@ -33,12 +33,14 @@
   }
 
   &__location,
-  &__tickets {
+  &__tickets,
+  &__host {
     text-transform: capitalize;
   }
   &__description,
   &__tickets,
-  &__location {
+  &__location,
+  &__host {
     padding-left: 0.5rem;
   }
   &__group {
