@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Hero from "../../components/Hero/Hero";
 import hero from "../../assets/images/svgs/hero.svg";
 import FormatDate from "../../utils/FormatDate";
+import SortEventsByDate from "../../utils/SortEventsByDate";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -14,38 +15,31 @@ export default function HomePage() {
   const [category, setCategory] = useState("All");
 
   // Gets host name based on the event user id and adds name to the event object in state
-  const getHost = async (sortedEvents) => {
+  const getHost = async (events) => {
     try {
       const eventsWithHost = await Promise.all(
-        sortedEvents.map(async (event) => {
+        events.map(async (event) => {
           const response = await axios.get(
             `${BASE_URL}/users/${event.user_id}`
           );
           return { ...event, host_name: response.data.user_name };
         })
       );
-
-      setFilteredEvents(eventsWithHost);
-      setAllEvents(eventsWithHost);
+      // Sort events and set state
+      setFilteredEvents(SortEventsByDate(eventsWithHost));
+      setAllEvents(SortEventsByDate(eventsWithHost));
     } catch (error) {
       console.log(error);
       throw error; // Re-throw the error to indicate that the function failed
     }
   };
 
-  // get all events and sort by date. Call the getHost function
+  // get all events. Call the getHost function
   useEffect(() => {
     const getEvents = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/events`);
-
-        // Sort events by date
-        const sortedEvents = response.data.sort((a, b) => {
-          const dateA = new Date(a.date);
-          const dateB = new Date(b.date);
-          return dateA - dateB;
-        });
-        getHost(sortedEvents);
+        getHost(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -157,10 +151,16 @@ export default function HomePage() {
               <h2 className="events--title">{category} events in Squamish</h2>
               <section className="events__list">
                 {filteredEvents.map((event) => {
+                  // get date for yesterday to conditionally display event based on whether it has passed
+                  const yday = new Date();
+                  yday.setDate(new Date().getDate() - 1);
+
                   return (
                     <Link
                       to={`/events/${event.id}`}
-                      className="event"
+                      className={
+                        yday < new Date(event.date) ? "event" : "event--hidden"
+                      }
                       key={event.id}
                     >
                       <img

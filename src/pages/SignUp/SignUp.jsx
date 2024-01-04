@@ -9,7 +9,7 @@ import signup from "../../assets/images/svgs/signup.svg";
 export default function SignUp() {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function SignUp() {
         setSuccess(true);
         setError("");
         e.target.reset();
-        //navigate("/myaccount/1"); //update id
+        navigate("../login"); //update to suto login and user dashboard
       })
       .catch((error) => {
         setSuccess(false);

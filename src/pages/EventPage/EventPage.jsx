@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import "./EventPage.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,6 +9,7 @@ import location from "../../assets/images/icons/location.svg";
 import price from "../../assets/images/icons/price.svg";
 import details from "../../assets/images/icons/details.svg";
 import save from "../../assets/images/icons/star.svg";
+import remove from "../../assets/images/icons/remove.svg";
 import edit from "../../assets/images/icons/edit.svg";
 import person from "../../assets/images/icons/person.svg";
 import deleteIcon from "../../assets/images/icons/delete.svg";
@@ -20,7 +21,7 @@ export default function EventPage({ loggedIn }) {
   const [event, setEvent] = useState({});
   const [host, setHost] = useState();
   const navigate = useNavigate();
-  //document.title = `Squamish Events | ${}`;
+  const [alreadySaved, setAlreadySaved] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [myEvent, setMyEvent] = useState(false);
 
@@ -31,6 +32,7 @@ export default function EventPage({ loggedIn }) {
         const response = await axios.get(`${BASE_URL}/events/${id}`);
 
         setEvent(response.data);
+        document.title = `${response.data.event_name}`;
       } catch (error) {
         console.log(error);
       }
@@ -51,9 +53,24 @@ export default function EventPage({ loggedIn }) {
       } catch (error) {
         console.log(error);
       }
+      //Check if event is saved by user
+      try {
+        const savedEvents = await axios.get(
+          `${BASE_URL}/saved/${sessionStorage.getItem("user_id")}`
+        );
+
+        const eventIsSaved = savedEvents.data.find(
+          (event) => event.event_id === Number(id)
+        );
+        if (eventIsSaved) {
+          setAlreadySaved(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
     getHostDetails();
-  }, [event]);
+  }, [event, id]);
 
   const deleteEvent = async () => {
     try {
@@ -75,10 +92,27 @@ export default function EventPage({ loggedIn }) {
     // post to likes table
     try {
       await axios.post(`${BASE_URL}/saved`, newLike);
+      setAlreadySaved(true);
       alert(`saved event`);
     } catch (error) {
       console.log(error);
-      alert(error.response.data.message || error.message);
+      //setAlreadySaved(true);
+      //alert(error.response.data.message || error.message);
+    }
+  };
+
+  const handleRemoveSave = async () => {
+    try {
+      await axios.delete(
+        `${BASE_URL}/saved/event/${id}/user/${sessionStorage.getItem(
+          "user_id"
+        )}`
+      );
+      setAlreadySaved(false);
+
+      alert(`Removed from saved events`);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -100,7 +134,7 @@ export default function EventPage({ loggedIn }) {
               {event ? FormatDate(event.date) : null}
             </p>
             <div className="event-page__icons">
-              {loggedIn && !myEvent && (
+              {loggedIn && !myEvent && !alreadySaved && (
                 <>
                   <img
                     src={save}
@@ -109,6 +143,19 @@ export default function EventPage({ loggedIn }) {
                     onClick={handleSave}
                   />
                   <p className="event-page__icon--tooltip">Save event</p>{" "}
+                </>
+              )}
+              {alreadySaved && (
+                <>
+                  <img
+                    src={remove}
+                    alt="remove from saved icon"
+                    className="event-page__icon--action"
+                    onClick={handleRemoveSave}
+                  />
+                  <p className="event-page__icon--tooltip">
+                    Remove from saved events
+                  </p>{" "}
                 </>
               )}
               {myEvent && (

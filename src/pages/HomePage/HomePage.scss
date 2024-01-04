@@ -60,6 +60,9 @@
 }
 
 .event {
+  &--hidden {
+    display: none;
+  }
   width: 100%;
   display: flex;
   flex-direction: column;

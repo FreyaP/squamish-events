@@ -5,16 +5,17 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FormatDate from "../../utils/FormatDate";
+import SortEventsByDate from "../../utils/SortEventsByDate";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Dashboard() {
   document.title = `Squamish Events | My Account`;
   const { user_id } = useParams();
-  //const navigate = useNavigate();
   const [myEvents, setMyEvents] = useState();
   const [user, setUser] = useState();
   const [savedEvents, setSavedEvents] = useState();
 
+  // Get event info for events that were saved by user
   const getSavedEvents = async (savedEvents) => {
     try {
       const savedEventDetails = await Promise.all(
@@ -36,28 +37,26 @@ export default function Dashboard() {
   useEffect(() => {
     const getUserEvents = async () => {
       //Invdividual try catch statements in case user has no events we still want to move to the next call
+      //Get user name
       try {
         const userResponse = await axios.get(`${BASE_URL}/users/${user_id}`);
         setUser(userResponse.data);
       } catch (error) {
         console.log(error);
       }
+      //Get events hosted by user, sort by date and set MyEvent state
       try {
         const response = await axios.get(`${BASE_URL}/events/user/${user_id}`);
-        setMyEvents(response.data);
+        setMyEvents(SortEventsByDate(response.data));
       } catch (error) {
         console.log(error);
       }
+      //Get records of events saved by user from 'saved' table - returns event ids
       try {
         const savedEvents = await axios.get(`${BASE_URL}/saved/${user_id}`);
         setSavedEvents(savedEvents.data);
-
-        const sortedEvents = savedEvents.data.sort((a, b) => {
-          const dateA = new Date(a.date);
-          const dateB = new Date(b.date);
-          return dateA - dateB;
-        });
-
+        const sortedEvents = SortEventsByDate(savedEvents.data);
+        // gets all event info
         getSavedEvents(sortedEvents);
       } catch (error) {
         console.log(error);
