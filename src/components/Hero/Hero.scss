@@ -7,8 +7,11 @@
   width: 100%;
   padding-top: 2rem;
   align-items: center;
+  margin-top: 8rem;
   @include tablet {
     flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5rem;
   }
   &__image {
     width: 20rem;
@@ -21,6 +24,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @include tablet {
+      width: 50%;
+    }
   }
   &__title {
     color: $dark-primary;

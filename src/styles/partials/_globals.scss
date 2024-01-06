@@ -66,14 +66,15 @@ button,
   width: 100%;
   border-radius: 20px;
   background-color: $button;
-  border: none;
+  border: 1px solid $button;
   color: $light-primary;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
 
   &:hover {
     cursor: pointer;
-    background-color: $button;
+    background-color: $light-primary;
+    color: $button;
   }
   @include tablet {
     width: fit-content;
@@ -89,4 +90,21 @@ input {
 }
 .logo {
   width: 4rem;
+}
+select {
+  border-radius: 20px;
+  height: 2.25rem;
+  margin-top: 4px;
+  padding-left: 1rem;
+  appearance: none;
+  background-image: url("../../assets/images/icons/chevron.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.divider {
+  background-color: $background-light;
+  height: 2rem;
 }

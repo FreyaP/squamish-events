@@ -1,17 +1,55 @@
 @use "../../styles/partials/globals" as *;
-
+.wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  perspective: 10px;
+}
 .homepage {
   background-color: $background-light;
 }
 .events {
-  margin: 0 2rem;
+  z-index: 1;
+  position: relative;
+  margin-top: 3rem;
   background-color: $light-primary;
   padding: 1rem 0;
-  &__filters {
-    padding-bottom: 2rem;
+  border-radius: 8px;
+  &--title {
+    text-align: center;
+    padding: 2rem 0;
   }
   &__filters {
+    margin: 0 2rem;
+    padding-bottom: 2rem;
     padding: 1rem;
+    border-radius: 20px;
+    position: relative;
+  }
+  &__filter {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+  &__filter-label {
+    text-transform: uppercase;
+    width: fit-content;
+    background-color: $background-light;
+    color: $dark-primary;
+    border-radius: 20px;
+    padding: 1rem;
+    height: fit-content;
+
+    transition: all 400ms ease-in-out;
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 0 30px 30px $button inset;
+      color: $light-primary;
+      background-color: $background-light;
+    }
   }
   &__search-button {
     margin-top: 1rem;
@@ -31,6 +69,9 @@
 }
 
 .event {
+  &--hidden {
+    display: none;
+  }
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -51,8 +92,11 @@
     width: 25%;
   }
   &__details {
+    display: flex;
+    flex-direction: column;
     align-self: flex-start;
     padding: 1rem;
+    width: 100%;
   }
   &__image {
     width: 100%;
@@ -60,7 +104,18 @@
     object-fit: cover;
     border-radius: 8px 8px 2px 2px;
   }
-  &__title {
+  &__title,
+  &__host {
     text-transform: capitalize;
+  }
+  &__most-saved {
+    color: $button;
+    background-color: $background-light;
+    padding: 0.5rem 1rem;
+    margin: 0.8rem auto;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
   }
 }
