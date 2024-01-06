@@ -10,6 +10,7 @@ export default function SignUp() {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  document.title = `Squamish Events | Sign Up`;
 
   const handleSubmit = (e) => {
     e.preventDefault();

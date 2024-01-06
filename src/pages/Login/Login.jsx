@@ -10,6 +10,7 @@ import login from "../../assets/images/svgs/login.svg";
 export default function Login({ setLoggedIn }) {
   const [error, setError] = useState();
   const navigate = useNavigate();
+  document.title = `Squamish Events | Login`;
 
   const handleSubmit = (e) => {
     e.preventDefault();

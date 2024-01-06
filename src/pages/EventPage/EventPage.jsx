@@ -11,6 +11,8 @@ import details from "../../assets/images/icons/details.svg";
 import save from "../../assets/images/icons/star.svg";
 import remove from "../../assets/images/icons/remove.svg";
 import edit from "../../assets/images/icons/edit.svg";
+import back from "../../assets/images/icons/back.svg";
+import date from "../../assets/images/icons/date.svg";
 import person from "../../assets/images/icons/person.svg";
 import deleteIcon from "../../assets/images/icons/delete.svg";
 import { Link } from "react-router-dom";
@@ -116,6 +118,10 @@ export default function EventPage({ loggedIn }) {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   if (!event) {
     return <h1>Loading</h1>;
   } else {
@@ -130,8 +136,9 @@ export default function EventPage({ loggedIn }) {
         </div>
         <div className="event-page__details">
           <div className="event-page__details--top">
-            <p className="event-page__date">
-              {event ? FormatDate(event.date) : null}
+            <p className="event-page__back" onClick={handleBack}>
+              <img src={back} className="event-page__icon" alt="back-arrow" />
+              {/* <p className="event-page__icon--tooltip">Back</p> */}
             </p>
             <div className="event-page__icons">
               {loggedIn && !myEvent && !alreadySaved && (
@@ -191,6 +198,14 @@ export default function EventPage({ loggedIn }) {
           <div className="event-page__group">
             <img src={person} alt="person icon" />
             <p className="event-page__host">{host}</p>
+          </div>
+          <h2 className="event-page__label">Date</h2>
+
+          <div className="event-page__group">
+            <img src={date} alt="date icon" />
+            <p className="event-page__date">
+              {event ? FormatDate(event.date) : null}
+            </p>
           </div>
           <h2 className="event-page__label">Location</h2>
           <div className="event-page__group">
