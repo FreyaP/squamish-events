@@ -26,7 +26,7 @@ export default function SignUp() {
         setSuccess(true);
         setError("");
         e.target.reset();
-        navigate("../login"); //update to suto login and user dashboard
+        navigate("../login"); // Future: update to auto login and user dashboard
       })
       .catch((error) => {
         setSuccess(false);

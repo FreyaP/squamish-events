@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import SignUp from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
 import { useState } from "react";
+import "./App.scss";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);

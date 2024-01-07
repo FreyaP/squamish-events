@@ -39,7 +39,12 @@ export default function Dashboard() {
       //Invdividual try catch statements in case user has no events we still want to move to the next call
       //Get user name
       try {
-        const userResponse = await axios.get(`${BASE_URL}/users/${user_id}`);
+        const userResponse = await axios.get(`${BASE_URL}/users/current`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        });
+
         setUser(userResponse.data);
       } catch (error) {
         console.log(error);

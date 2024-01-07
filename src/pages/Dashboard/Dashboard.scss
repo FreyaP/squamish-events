@@ -28,10 +28,13 @@
     flex-direction: column;
     gap: 2rem;
     margin-top: 2rem;
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 }
 .event {
-  //width: auto;
   &__image {
     width: 100%;
   }
