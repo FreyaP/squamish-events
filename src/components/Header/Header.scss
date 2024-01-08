@@ -1,0 +1,49 @@
+@use "../../styles/partials/globals" as *;
+
+.header {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  background-color: $light-primary;
+  width: 100%;
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 3rem 0 3rem;
+    }
+  }
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    @include tablet {
+      gap: 5rem;
+    }
+
+    &--account {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+  &__link {
+    border-bottom: 2px solid $light-primary;
+    line-height: 1.625rem;
+    &:hover {
+      border-bottom: 2px solid $accent-primary;
+      cursor: pointer;
+    }
+  }
+}
