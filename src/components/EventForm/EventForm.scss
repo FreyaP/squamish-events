@@ -19,6 +19,13 @@
       border: none;
       border-radius: 0;
       padding: 0;
+      &-error {
+        color: $button;
+      }
+    }
+    &--error {
+      border: 1px solid $button;
+      margin-bottom: 1rem;
     }
   }
   &__category {
@@ -33,5 +40,11 @@
     @include tablet {
       flex-direction: row;
     }
+  }
+  &__error {
+    color: $button;
+    padding-top: 1rem;
+    font-weight: 600;
+    text-align: center;
   }
 }

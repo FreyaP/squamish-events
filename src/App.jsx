@@ -27,7 +27,7 @@ function App() {
           <Route path="/editevent/:id" element={<EditEvent />} />
           <Route path="/delete" element={<DeleteModal />} />
           <Route path="/myaccount/:user_id" element={<Dashboard />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp loggedIn={loggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
         </Routes>
       </BrowserRouter>

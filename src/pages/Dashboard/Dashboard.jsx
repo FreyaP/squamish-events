@@ -35,39 +35,43 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    const getUserEvents = async () => {
-      //Invdividual try catch statements in case user has no events we still want to move to the next call
-      //Get user name
-      try {
-        const userResponse = await axios.get(`${BASE_URL}/users/current`, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        });
+    if (sessionStorage.getItem("token")) {
+      const getUserEvents = async () => {
+        //Invdividual try catch statements in case user has no events we still want to move to the next call
+        //Get user name
+        try {
+          const userResponse = await axios.get(`${BASE_URL}/users/current`, {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          });
 
-        setUser(userResponse.data);
-      } catch (error) {
-        console.log(error);
-      }
-      //Get events hosted by user, sort by date and set MyEvent state
-      try {
-        const response = await axios.get(`${BASE_URL}/events/user/${user_id}`);
-        setMyEvents(SortEventsByDate(response.data));
-      } catch (error) {
-        console.log(error);
-      }
-      //Get records of events saved by user from 'saved' table - returns event ids
-      try {
-        const savedEvents = await axios.get(`${BASE_URL}/saved/${user_id}`);
-        setSavedEvents(savedEvents.data);
-        const sortedEvents = SortEventsByDate(savedEvents.data);
-        // gets all event info
-        getSavedEvents(sortedEvents);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUserEvents();
+          setUser(userResponse.data);
+        } catch (error) {
+          console.log(error);
+        }
+        //Get events hosted by user, sort by date and set MyEvent state
+        try {
+          const response = await axios.get(
+            `${BASE_URL}/events/user/${user_id}`
+          );
+          setMyEvents(SortEventsByDate(response.data));
+        } catch (error) {
+          console.log(error);
+        }
+        //Get records of events saved by user from 'saved' table - returns event ids
+        try {
+          const savedEvents = await axios.get(`${BASE_URL}/saved/${user_id}`);
+          setSavedEvents(savedEvents.data);
+          const sortedEvents = SortEventsByDate(savedEvents.data);
+          // gets all event info
+          getSavedEvents(sortedEvents);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getUserEvents();
+    }
   }, [user_id]);
 
   if (user_id !== sessionStorage.getItem("user_id")) {
