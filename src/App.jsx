@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import SignUp from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
 import { useState } from "react";
+import "./App.scss";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -26,7 +27,7 @@ function App() {
           <Route path="/editevent/:id" element={<EditEvent />} />
           <Route path="/delete" element={<DeleteModal />} />
           <Route path="/myaccount/:user_id" element={<Dashboard />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp loggedIn={loggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
         </Routes>
       </BrowserRouter>

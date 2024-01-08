@@ -4,6 +4,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   perspective: 10px;
+  @include desktop {
+    margin-left: 20rem;
+    margin-right: 20rem;
+  }
 }
 .homepage {
   background-color: $background-light;

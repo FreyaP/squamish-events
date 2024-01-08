@@ -6,14 +6,45 @@ import { useState } from "react";
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 import login from "../../assets/images/svgs/login.svg";
+import validateEmail from "../../utils/ValidateEmail";
 
 export default function Login({ setLoggedIn }) {
   const [error, setError] = useState();
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   document.title = `Squamish Events | Login`;
 
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    if (e.target.name === "email" && e.target.value) {
+      const isEmailValid = validateEmail(e.target.value);
+      setFormErrors({
+        ...formErrors,
+        email: !isEmailValid,
+      });
+    }
+    if (e.target.name === "password" && e.target.value) {
+      setFormErrors({
+        ...formErrors,
+        password: false,
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!e.target.email.value) {
+      setFormErrors({
+        ...formErrors,
+        email: true,
+      });
+    }
+    if (!e.target.password.value) {
+      setFormErrors({
+        ...formErrors,
+        password: true,
+      });
+    }
 
     axios
       .post(`${BASE_URL}/users/login`, {
@@ -27,8 +58,10 @@ export default function Login({ setLoggedIn }) {
         navigate(`/myaccount/${response.data.id}`);
       })
       .catch((error) => {
-        console.log(error.response.data);
-        setError(error.response.data);
+        console.log(error.response?.data);
+        console.log(error);
+        setError(error.response?.data);
+        setError(error.message);
       });
   };
 
@@ -44,9 +77,12 @@ export default function Login({ setLoggedIn }) {
             </label>
             <input
               type="text"
-              className="login__input"
+              className={
+                formErrors.email ? "signup__input--error" : "signup__input"
+              }
               name="email"
               id="email"
+              onChange={handleInputChange}
             />
           </div>
           <div className="login__field">
@@ -55,9 +91,12 @@ export default function Login({ setLoggedIn }) {
             </label>
             <input
               type="password"
-              className="login__input"
+              className={
+                formErrors.password ? "signup__input--error" : "signup__input"
+              }
               name="password"
               id="password"
+              onChange={handleInputChange}
             />
           </div>
           <button className="login__button">Login</button>

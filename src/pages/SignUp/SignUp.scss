@@ -9,7 +9,12 @@
   }
   &__input {
     margin-bottom: 1rem;
+    &--error {
+      border: 1px solid $button;
+      margin-bottom: 1rem;
+    }
   }
+
   &__footer {
     margin-top: 1rem;
     text-align: center;
