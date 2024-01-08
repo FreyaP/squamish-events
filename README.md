@@ -122,311 +122,98 @@ Dashboard (logged in host)
 
 ![](./src/assets/delete.png)
 
-### Data
-
-<!-- Describe your data and the relationships between them. You can show this visually using diagrams, or write it out. -->
+### Features
 
-User Table
+- Users can view the home page and a list of events, filtering events by category, most popular or by the upcoming weekend.
 
-- ID
-- Name
-- Email
-- Password hash
-- Role (Host or viewer) - potentially to show personalized dashboard
+- Users can sign up for an account.
 
-[Events by host: would be displayed by calling eventsByUserId from the Events table ]
-
-Events Table
-
-- ID
-- Event_name
-- Venue
-- Description
-- Date
-- Category
-- Ticket_link
-- Image
-- Likes
-- Host_id (FK - Host ID)
-
-<!-- ### Nice to have
-
-User Table (if using user auth)
-
-- ID
-- Name
-- Email
-- Password
-- Saved events (FK - Event ID) -->
-
-### Endpoints
-
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
-
-**GET/events**
-
-- Get all events
-
-Response:
-
-"id": 1,
-"name": "Fred",
-"email": "email",
-"password": "password",
-"role": "host",
-"events": []
-
-**POST/events**
+- Logged in users can post, edit and delete their own events and can save other hosted events. User events and saved events appear in a user dashboard.
 
-- Create an event
-
-Params:
-
-- token of logged in host if using auth
-
-Request:
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
+![](./src/assets/screenshots/event%20details.png)
 
-**GET/events/:id**
-Get single event
+## Run Locally
 
-Params:
-event id
+Clone the project client and server repos
 
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
+```bash
+$ git clone https://github.com/FreyaP/squamish-events.git
+$ git clone https://github.com/FreyaP/squamish-events-api.git
+```
 
-**PUT/events/:id**
-Edit an event
+## Server Set Up
 
-Params:
+Go to server project and install dependencies
 
-- event id
-- token of host if using auth
+```bash
+$ cd squamish-events-api
+$ npm install
+```
 
-Request:
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
+Set up Database in MySQL
 
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
+```bash
+CREATE DATABASE <DB_NAME>;
+```
 
-**DELETE/events/:id**
-Delete an event
+Run migrations
 
-Params
+```bash
+$ npx knex migrate:latest
+```
 
-- id
-- token of host if using auth
+Run seeds
 
-Request:
-"id"
+```bash
+$ npx knex run:seed
+```
 
-Response:
-No content
+Set environment variables - rename .env.sample to .env and replace values
 
-**PUT/events/:id/likes**
-Add like to event
+```bash
+PORT=<PORT_NUMBER>
+DB_HOST=<HOST_ADDRESS>
+DB_LOCAL_NAME=<DB_NAME>
+DB_LOCAL_USER=<username>
+DB_LOCAL_PASSWORD=<password>
+JWT_SECRET=<SECRET_KEY>
 
-**GET/events/:host_id**
-Get events by host (by a logged in host)
+```
 
-Params:
+Start the server
 
-- host*id*
-- token if using auth
+```bash
+$ npm run dev
+```
 
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
+## Client Set Up
 
-**POST/users/register**
-Add a user (host)
+Go to client project and install dependencies
 
-Params:
+```bash
+$ cd squamish-events
+$ npm install
+```
 
-- email
-- password
+Set environment variables - rename .env.sample to .env and replace values
 
-Response:
+```bash
+VITE_BASE_URL=http://localhost:<PORT SET IN SERVER .ENV>
+```
 
-{ "token": ....}
+Start the app
 
-**POST/users/login**
+```bash
+$ npm run dev
+```
 
-Login a user (host)
+To play with features as a logged in user either signup or use the following user credentials:
 
-Params:
+- Email: john@example.com
+- Password: password
 
-- email
-- password
+## Next Steps
 
-Response:
-
-{ "token": ....}
-
-### Auth
-
-**NICE TO HAVE:**
-
-- JWT auth
-  - Before adding auth, all API requests will be using a fake user with id 1
-  - Added after core features have first been implemented
-  - Store JWT in sessionStorage, remove when a user logs out or closes browser
-  - Add states for logged in showing different UI in places listed in mockups
-
-## Roadmap
-
-Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
-
-- FE: Client:
-
-  - FE react project
-  - routes
-  - folder structure
-  - git init
-
-- BE: Server
-
-  - Express server
-  - folder structure
-  - Routes
-  - git init
-
-- BE: Migrations and seed data
-
-  - make fake data
-
-- FE: Styles
-
-- FE: Home page
-
-  - Header
-    - Nav
-    - Login
-    - Signup
-  - Hero
-
-- FE: Event List
-
-  - GET/events
-  - Single event mapped
-
-- BE: GET/events controller
-
-- FE: Single event
-
-  - GET/events/:id
-  - Event details
-
-- BE: GET/events/:id controller
-
-- FE: Make event
-
-  - POST/events/
-  - do i need this in params:host_id
-  - Form
-  - Form validation (later or nice to have)
-
-- BE: POST/events - controller
-
-- FE: Edit event
-
-  - PUT/events/:id
-  - host_id if using auth
-  - Form
-  - Validation (later or nice to have)
-
-- BE: PUT/events/:id controller
-
-- BE: DELETE/events/:id controller
-
-- FE: Delete event
-
-  - modal (nice to have)
-
-- FE: Sign up
-
-  - POST/users/register
-  - Form
-  - Vaildation
-
-- BE: POST/users/register controller
-
-- FE: Login
-
-  - POST/users/login
-  - Form
-
-- BE: POST/users/login controller
-
-- FE/BE: Add PUT likes request and endpoint
-
-- BE: JWT Auth (nice to have)
-
-  - Update request and responses
-
-- FE: JWT Auth (nice to have)
-
-  - Store token in local storage
-  - include token in axios calls
-
-- FE: Weather Bar
-
-  - Axios call to open weather map set squamish as location
-
-- Bug Fixes
-
-## Nice-to-haves
-
-- FE/BE: User signup and login auth
 - FE: Light/dark theme
 - See past atteneded events/saved events in user profile when logged in
 - Forget password functionality
