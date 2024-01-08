@@ -1,126 +1,14 @@
-# Project Title
+# Squamish Events Hub
 
-Squmaish Event Hub
+Discover and share the heartbeat of Squamish through this dynamic event sharing platform. Whether you're a seeker of experiences or an event organizer, our user-friendly platform connects you with the vibrant pulse of the community. Explore, create, and celebrate extraordinary moments in Squamish!
 
-## Overview
-
-An event listing website platform where users can discover and share various events happening Squamish. Users can browse through different categories of events and view event details. Event organizers can create and manage their events, reaching a broader audience.
-
-### Problem
-
-Squamish locals and visitors often miss out on exciting events happening around them, uh FOMO! Event organizers struggle to promote their events effectively. This app aims to bridge the gap by providing a centralized platform for Squamish event discovery and promotion.
-
-### User Profile
-
-Locals or visitors looking for upcoming events in Squamish, whether it be music, outdoor, educational etc. - (View only)
-
-Event organizers and business owners wanting to post and advertise their events - (May require sign up and login)
-
-Users who want to save events to a calendar or "bucket list" page (nice to have - May require sign in and login)
-
-### Features
-
-<!-- List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented. -->
-
-As an organizer (logged in - nice to have):
-
-- post an event to the site including event name, host, images, decription, price, type of event and ticket info
-- events expire after the event date or can be deleted anytime
-- events can be edited by the event organizer
-- host dashboard - shows list of events host has added
-
-As a user:
-
-- view upcoming events in squamish
-- filter or organize events by category, date, popularity (if using like stats)
-- engage with event posting e.g. liking, sharing or commenting (nice to have)
-
-As a logged in user (nice to have):
-
-- save events to a wish list
-
-General Site Features:
-
-- weather bar showing the current and forecast weather (external api)
-  - Will appear below the nav bar (not in the mock up images)
-- responsive design
-
-## Implementation
+Also my capstone project for BrainStation's full-stack web development bootcamp!
 
 ### Tech Stack
 
-Frontend:
+This site is a Vite React app using react-router and SASS on the front-end, Node and Express for a back-end server and Knex for querying a MySQL database. JWT/BcCrypt was implemented for user authentication/authorization and Multer was used to handle image uploads.
 
-- React
-- SCSS
-- TypeScript (potentially)
-- Client libraries:
-  - react
-  - react-router
-  - axios - HTTP requests
-
-Backend:
-
-- Node
-- knex
-- express
-- bcrypt for password hashing
-- MySql
-
-### APIs
-
-Open weather map api for the current and forecast weather data
-
-### Sitemap
-
-<!-- List the pages of your app with brief descriptions. You can show this visually, or write it out. -->
-
-Home Page
-
-- displays events to browse
-
-Add Event
-
-- add event form (logged in host)
-
-Edit Event
-
-- edit eveit form (logged in host)
-
-Event details
-
-- details of single event with link to tickets if applicable
-
-Register
-
-- sign up form
-
-Login
-
-- login form
-
-Dashboard (logged in host)
-
-- profile details
-- list of events by the logged in host
-
-### Mockups
-
-<!-- Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches. -->
-
-![](./src/assets/HomePage.png)
-
-![](./src/assets/Addedit%20page.png)
-
-![](./src/assets/Event-details.png)
-
-![](./src/assets/register.png)
-
-![](./src/assets/Login.png)
-
-![](./src/assets/host%20dashboard.png)
-
-![](./src/assets/delete.png)
+![](./src/assets/screenshots/Home%20page%20-%20event%20list.png)
 
 ### Features
 
@@ -132,7 +20,7 @@ Dashboard (logged in host)
 
 ![](./src/assets/screenshots/event%20details.png)
 
-## Run Locally
+### Run Locally
 
 Clone the project client and server repos
 
@@ -148,12 +36,6 @@ Go to server project and install dependencies
 ```bash
 $ cd squamish-events-api
 $ npm install
-```
-
-Set up Database in MySQL
-
-```bash
-CREATE DATABASE <DB_NAME>;
 ```
 
 Run migrations
@@ -215,9 +97,8 @@ To play with features as a logged in user either signup or use the following use
 ## Next Steps
 
 - FE: Light/dark theme
-- See past atteneded events/saved events in user profile when logged in
 - Forget password functionality
 - Social media intergration
 - Set notifications for new events added in specific categories
-- user comments on events
-- analytics on event engagement
+- User comments on events
+- Analytics on event engagement
