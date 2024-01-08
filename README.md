@@ -1,436 +1,99 @@
-# Project Title
+# Squamish Events Hub
 
-Squmaish Event Hub
+Discover and share the heartbeat of Squamish through this dynamic event sharing platform. Whether you're a seeker of experiences or an event organizer, our user-friendly platform connects you with the vibrant pulse of the community. Explore, create, and celebrate extraordinary moments in Squamish!
 
-## Overview
-
-An event listing website platform where users can discover and share various events happening Squamish. Users can browse through different categories of events and view event details. Event organizers can create and manage their events, reaching a broader audience.
-
-### Problem
-
-Squamish locals and visitors often miss out on exciting events happening around them, uh FOMO! Event organizers struggle to promote their events effectively. This app aims to bridge the gap by providing a centralized platform for Squamish event discovery and promotion.
-
-### User Profile
-
-Locals or visitors looking for upcoming events in Squamish, whether it be music, outdoor, educational etc. - (View only)
-
-Event organizers and business owners wanting to post and advertise their events - (May require sign up and login)
-
-Users who want to save events to a calendar or "bucket list" page (nice to have - May require sign in and login)
-
-### Features
-
-<!-- List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented. -->
-
-As an organizer (logged in - nice to have):
-
-- post an event to the site including event name, host, images, decription, price, type of event and ticket info
-- events expire after the event date or can be deleted anytime
-- events can be edited by the event organizer
-- host dashboard - shows list of events host has added
-
-As a user:
-
-- view upcoming events in squamish
-- filter or organize events by category, date, popularity (if using like stats)
-- engage with event posting e.g. liking, sharing or commenting (nice to have)
-
-As a logged in user (nice to have):
-
-- save events to a wish list
-
-General Site Features:
-
-- responsive design
-
-## Implementation
+Also my capstone project for BrainStation's full-stack web development bootcamp!
 
 ### Tech Stack
 
-Frontend:
+This site is a Vite React app using react-router and SASS on the front-end, Node and Express for a back-end server and Knex for querying a MySQL database. JWT/BcCrypt was implemented for user authentication/authorization and Multer was used to handle image uploads.
 
-- React
-- SCSS
-- TypeScript (potentially)
-- Client libraries:
-  - react
-  - react-router
-  - axios - HTTP requests
-  - multer for images
+![](./src/assets/screenshots/Home%20page%20-%20event%20list.png)
 
-Backend:
+### Features
 
-- Node
-- knex
-- express
-- bcrypt for password hashing
-- MySql
+- Users can view the home page and a list of events, filtering events by category, most popular or by the upcoming weekend.
 
-### APIs
+- Users can sign up for an account.
 
-### Sitemap
+- Logged in users can post, edit and delete their own events and can save other hosted events. User events and saved events appear in a user dashboard.
 
-<!-- List the pages of your app with brief descriptions. You can show this visually, or write it out. -->
+![](./src/assets/screenshots/event%20details.png)
 
-Home Page
+### Run Locally
 
-- displays events to browse
+Clone the project client and server repos
 
-Add Event
+```bash
+$ git clone https://github.com/FreyaP/squamish-events.git
+$ git clone https://github.com/FreyaP/squamish-events-api.git
+```
 
-- add event form (logged in host)
+## Server Set Up
 
-Edit Event
+Go to server project and install dependencies
 
-- edit event form (logged in host)
+```bash
+$ cd squamish-events-api
+$ npm install
+```
 
-Event details
+Run migrations
 
-- details of single event with link to tickets if applicable
+```bash
+$ npm run migrate
+```
 
-Register
+Run seeds
 
-- sign up form
+```bash
+$ npm run seed
+```
 
-Login
+Set environment variables - rename .env.sample to .env and replace values
 
-- login form
+```bash
+PORT=<PORT_NUMBER>
+DB_HOST=<HOST_ADDRESS>
+DB_LOCAL_NAME=<DB_NAME>
+DB_LOCAL_USER=<username>
+DB_LOCAL_PASSWORD=<password>
+JWT_SECRET=<SECRET_KEY>
 
-Dashboard (logged in host) - do I need another UI for a user vs host
+```
 
-- profile details
-- list of events by the logged in host or list of events saved?"interested in" by user
+Start the server
 
-### Mockups
+```bash
+$ npm run dev
+```
 
-<!-- Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches. -->
+## Client Set Up
 
-![](./src/assets/HomePage.png)
+Go to client project and install dependencies
 
-![](./src/assets/Addedit%20page.png)
+```bash
+$ cd squamish-events
+$ npm install
+```
 
-![](./src/assets/Event-details.png)
+Set environment variables - rename .env.sample to .env and replace values
 
-![](./src/assets/register.png)
+```bash
+VITE_BASE_URL=http://localhost:<PORT SET IN SERVER .ENV>
+```
 
-![](./src/assets/Login.png)
+Start the app
 
-![](./src/assets/host%20dashboard.png)
+```bash
+$ npm run dev
+```
 
-![](./src/assets/delete.png)
+## Next Steps
 
-### Data
-
-<!-- Describe your data and the relationships between them. You can show this visually using diagrams, or write it out. -->
-
-User Table
-
-- ID
-- Name
-- Email
-- Password hash
-- Role (Host or viewer) - potentially to show personalized dashboard
-
-[Events by host: would be displayed by calling eventsByUserId from the Events table ]
-
-Events Table
-
-- ID
-- Event_name
-- Venue
-- Description
-- Date
-- Category
-- Ticket_link
-- Image
-- Likes - this is moved into a seperate table
-- Host_id (FK - Host ID)
-
-Likes Table - events can be liked by many users & a user can like many events
-
-- id
-- user_id
-- event_id
-- liked (true/false)
-  e.g. get all events that have likes with user_id = ??? (this is the join command )
-
-### Endpoints
-
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
-
-**GET/events**
-
-- Get all events
-
-Response:
-
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-**POST/events**
-
-- Create an event
-
-Params:
-
-- token of logged in host if using auth
-
-Request:
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-**GET/events/:id**
-Get single event
-
-Params:
-event id
-
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-**PUT/events/:id**
-Edit an event
-
-Params:
-
-- event id
-- token of host if using auth
-
-Request:
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-**DELETE/events/:id**
-Delete an event
-
-Params
-
-- id
-- token of host if using auth
-
-Request:
-"id"
-
-Response:
-No content
-
-**POST/likes **DELETE/likes\*\*
-user_id
-event_id
-
-**GET/events/:host_id**
-Get events by host (by a logged in host)
-
-Params:
-
-- host*id*
-- token if using auth
-
-Response body:
-"id"
-"event_name":
-"description"
-"date"
-"category"
-"ticket_link"
-"image"
-"likes"
-"host_id" (FK - Host ID)
-
-**POST/users/register**
-Add a user (host)
-
-Params:
-
-- email
-- password
-
-Response:
-
-{ "token": ....}
-
-**POST/users/login**
-
-Login a user (host)
-
-Params:
-
-- email
-- password
-
-Response:
-
-{ "token": ....}
-
-### Auth
-
-**NICE TO HAVE:**
-
-- JWT auth
-  - Before adding auth, all API requests will be using a fake user with id 1
-  - Added after core features have first been implemented
-  - Store JWT in sessionStorage, remove when a user logs out or closes browser
-  - Add states for logged in showing different UI in places listed in mockups
-
-## Roadmap
-
-Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
-
-- FE: Client:
-
-  - FE react project
-  - routes
-  - folder structure
-  - git init
-
-- BE: Server
-
-  - Express server
-  - folder structure
-  - Routes
-  - git init
-
-- BE: Migrations and seed data
-
-  - make fake data
-
-- FE: Styles
-
-- FE: Home page
-
-  - Header
-    - Nav
-    - Login
-    - Signup
-  - Hero
-
-- FE: Event List
-
-  - GET/events
-  - Single event mapped
-
-- BE: GET/events controller
-
-- FE: Single event
-
-  - GET/events/:id
-  - Event details
-
-- BE: GET/events/:id controller
-
-- FE: Make event
-
-  - POST/events/
-  - do i need this in params:host_id
-  - Form
-  - Form validation (later or nice to have)
-
-- BE: POST/events - controller
-
-- FE: Edit event
-
-  - PUT/events/:id
-  - host_id if using auth
-  - Form
-  - Validation (later or nice to have)
-
-- BE: PUT/events/:id controller
-
-- BE: DELETE/events/:id controller
-
-- FE: Delete event
-
-  - modal (nice to have)
-
-- FE: Sign up
-
-  - POST/users/register
-  - Form
-  - Vaildation
-
-- BE: POST/users/register controller
-
-- FE: Login
-
-  - POST/users/login
-  - Form
-
-- BE: POST/users/login controller
-
-- FE/BE: Add PUT likes request and endpoint
-
-- BE: JWT Auth (nice to have)
-
-  - Update request and responses
-
-- FE: JWT Auth (nice to have)
-
-  - Store token in local storage
-  - include token in axios calls
-
-- FE: Weather Bar
-
-  - Axios call to open weather map set squamish as location
-
-- Bug Fixes
-
-## Nice-to-haves
-
-- FE/BE: User signup and login auth
 - FE: Light/dark theme
-- See past atteneded events/saved events in user profile when logged in
 - Forget password functionality
 - Social media intergration
 - Set notifications for new events added in specific categories
-- user comments on events
-- analytics on event engagement
+- User comments on events
+- Analytics on event engagement
