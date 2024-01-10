@@ -102,7 +102,7 @@ export default function HomePage() {
   };
 
   if (!allEvents || allEvents.length === 0) {
-    return <h1>Finding events in Squamish...</h1>;
+    return <h1 className="homepage__loading">Finding events in Squamish...</h1>;
   } else if (allEvents.length > 0) {
     return (
       <div className="homepage wrapper">

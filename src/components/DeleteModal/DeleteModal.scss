@@ -8,10 +8,15 @@
   top: 0;
   right: 0;
   bottom: 0;
+  z-index: 1000;
+
   &__content {
     height: 100vh;
     width: 100vw;
     background-color: #fff;
+    padding: 5rem;
+    padding-top: 10rem;
+    z-index: 1000;
   }
   &__close {
     display: flex;
@@ -20,6 +25,7 @@
     padding-top: 1rem;
     &-img {
       cursor: pointer;
+      padding-left: 0.8rem;
     }
     &-logo {
       height: 3rem;
@@ -31,13 +37,10 @@
     padding-right: 1rem;
   }
   &__title {
-    // @include mobile-h1-style;
     padding-top: 2.5rem;
     padding-bottom: 1rem;
   }
-  //   &__body-message {
-  //     @include mobile-p1-style;
-  //   }
+
   &__footer {
     display: flex;
     gap: 1rem;
@@ -45,59 +48,6 @@
     width: 100%;
     bottom: 0;
     left: 0;
-    padding: 1rem;
+    padding: 5rem;
   }
 }
-
-// //tablet styles
-// @include tablet {
-//   .modal {
-//     position: fixed;
-//     left: 0;
-//     top: 0;
-//     right: 0;
-//     bottom: 0;
-//     background-color: rgba(0, 0, 0, 0.7);
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-
-//     &__content {
-//       position: absolute;
-//       top: 20%;
-//       width: 672px;
-//       height: 262px;
-//       background-color: #fff;
-//       border-radius: 3px;
-//     }
-//     &__close {
-//       display: flex;
-//       justify-content: flex-end;
-//       padding-right: 1rem;
-//       padding-top: 1rem;
-//     }
-
-//     &__confirmation {
-//       padding-left: 3rem;
-//       padding-right: 3rem;
-//     }
-//     &__title {
-//       padding-top: 0;
-//     }
-//     &__footer {
-//       display: flex;
-//       justify-content: flex-end;
-//       padding: 2rem;
-//     }
-
-//     &__delete-btn {
-//       margin-left: 1rem;
-//     }
-
-//     button {
-//       padding-left: 2rem;
-//       padding-right: 2rem;
-//       border-radius: 3rem;
-//     }
-//   }
-// }
