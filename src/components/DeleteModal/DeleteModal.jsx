@@ -16,7 +16,7 @@ export default function DeleteModal({
     <div className="modal">
       <div className="modal__content">
         <div className="modal__close">
-          <img src={logo} alt="logo" className="modal__close-logo" />
+          {/* <img src={logo} alt="logo" className="modal__close-logo" /> */}
           <img
             src={closeIcon}
             alt="X"
