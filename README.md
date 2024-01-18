@@ -47,7 +47,7 @@ $ npx knex migrate:latest
 Run seeds
 
 ```bash
-$ npx knex run:seed
+$ npx knex seed:run
 ```
 
 Set environment variables - rename .env.sample to .env and replace values
